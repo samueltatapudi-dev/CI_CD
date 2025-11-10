@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ACEest Fitness (Flask)</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; }
+    .card { border: 1px solid #ddd; padding: 1rem; border-radius: 8px; max-width: 520px; }
+    input[type=text], input[type=number] { padding: .5rem; width: 100%; margin: .25rem 0 .75rem; }
+    button { padding: .5rem .75rem; }
+    table { border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #eee; padding: .5rem .75rem; }
+  </style>
+  </head>
+<body>
+  <h1>ACEest Fitness (Flask)</h1>
+  <div class="card">
+    <form method="post" action="{{ url_for('add') }}">
+      <label>Workout</label>
+      <input type="text" name="workout" required>
+      <label>Duration (minutes)</label>
+      <input type="number" name="duration" min="1" step="1" required>
+      <button type="submit">Add Workout</button>
+    </form>
+    <form method="post" action="{{ url_for('clear') }}" style="margin-top: .5rem;">
+      <button type="submit">Clear</button>
+    </form>
+  </div>
+
+  <h2>Logged Workouts</h2>
+  {% if workouts %}
+  <table>
+    <thead><tr><th>#</th><th>Workout</th><th>Duration (min)</th></tr></thead>
+    <tbody>
+    {% for w in workouts %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ w.workout }}</td>
+        <td>{{ w.duration }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot><tr><th colspan="2" style="text-align:right">Total:</th><th>{{ total }}</th></tr></tfoot>
+  </table>
+  {% else %}
+    <p>No workouts logged yet.</p>
+  {% endif %}
+
+  <p style="margin-top:2rem; color:#666">File: ACEest_Fitness (converted)</p>
+</body>
+</html>
+
